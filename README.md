@@ -27,7 +27,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  androidTestCompile 'com.github.lkorth:device-automator:'
+  androidTestCompile 'com.github.lkorth:device-automator:master-SNAPSHOT'
 }
 ```
 
