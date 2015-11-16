@@ -71,6 +71,16 @@ public class DeviceAutomator {
     }
 
     /**
+     * Simulates a short press on the ENTER key.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressEnter() {
+        mDevice.pressEnter();
+        return this;
+    }
+
+    /**
      * Launches the app with the given package name and waits for it to start with a timeout of 5 seconds.
      *
      * @param packageName package name of the app to launch.
