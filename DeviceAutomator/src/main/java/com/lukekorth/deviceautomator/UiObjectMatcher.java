@@ -145,6 +145,38 @@ public class UiObjectMatcher {
         return new UiObjectMatcher(uiSelector, bySelector);
     }
 
+    /**
+     * Find a view based on the resource id. Resource ids should be the fully qualified id,
+     * ex: com.android.browser:id/url
+     *
+     * @param id The fully qualified id of the view, ex: com.android.browser:id/url
+     * @return
+     */
+    public static UiObjectMatcher withResourceId(String id) {
+        return withResourceId(id, null);
+    }
+
+    /**
+     * Find a view based on the resource id. Resource ids should be the fully qualified id,
+     * ex: com.android.browser:id/url
+     *
+     * @param id The fully qualified id of the view, ex: com.android.browser:id/url
+     * @param klass Expected class of the view.
+     * @return
+     */
+    public static UiObjectMatcher withResourceId(String id, Class klass) {
+        UiSelector uiSelector = new UiSelector()
+                .resourceId(id);
+        BySelector bySelector = By.res(id);
+
+        if (klass != null) {
+            uiSelector.className(klass);
+            bySelector.clazz(klass);
+        }
+
+        return new UiObjectMatcher(uiSelector, bySelector);
+    }
+
     UiObject getUiObject(UiDevice device) {
         return device.findObject(mUiSelector);
     }
