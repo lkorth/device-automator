@@ -1,13 +1,16 @@
 package com.lukekorth.deviceautomator;
 
 import android.graphics.Rect;
+import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
-import java.lang.Override;import java.lang.RuntimeException;import static junit.framework.Assert.assertTrue;
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * A collection of assertions for use with {@link DeviceAutomator}.
@@ -58,6 +61,21 @@ public abstract class AutomatorAssertion {
                     matcher.describeMismatch(object.getText(), description);
                     assertTrue(description.toString(), false);
                 }
+            }
+        };
+    }
+
+    /**
+     * Asserts that the foreground app is the package specified.
+     *
+     * @param packageName The package to check for.
+     * @return
+     */
+    public static AutomatorAssertion foregroundAppIs(final String packageName) {
+        return new AutomatorAssertion() {
+            @Override
+            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+                assertTrue(UiDevice.getInstance(getInstrumentation()).hasObject(By.pkg(packageName)));
             }
         };
     }

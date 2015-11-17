@@ -1,13 +1,13 @@
 package com.lukekorth.deviceautomator;
 
 import android.content.Intent;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.Until;
 
-import java.lang.String;import static android.support.test.InstrumentationRegistry.getContext;
+import static android.support.test.InstrumentationRegistry.getContext;
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.uiautomator.Until.hasObject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -40,8 +40,7 @@ public class DeviceAutomator {
      *         {@link UiObjectMatcher} only.
      */
     public static DeviceAutomator onDevice(UiObjectMatcher matcher) {
-        return new DeviceAutomator(UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()),
-                matcher);
+        return new DeviceAutomator(UiDevice.getInstance(getInstrumentation()), matcher);
     }
 
     /**
