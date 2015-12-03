@@ -74,12 +74,25 @@ public class DeviceAutomator {
     }
 
     /**
-     * Asserts that the foreground app has the given package name.
+     * Asserts that the foreground app has the given package name. Waits for up to 5 seconds for the
+     * given package to become the foreground app.
      *
      * @param packageName package name to check against the foreground app.
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator checkForegroundAppIs(String packageName) {
+        return checkForegroundAppIs(packageName, 5000);
+    }
+
+    /**
+     * Asserts that the foreground app has the given package name. Waits for up to the given timeout
+     * for the given package to become the foreground app.
+     *
+     * @param packageName package name to check against the foreground app.
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator checkForegroundAppIs(String packageName, long timeout) {
+        mDevice.wait(Until.hasObject(By.pkg(packageName).depth(0)), 5000);
         assertTrue(mDevice.hasObject(By.pkg(packageName).depth(0)));
         return this;
     }
