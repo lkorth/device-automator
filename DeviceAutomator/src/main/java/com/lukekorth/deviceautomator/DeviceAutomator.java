@@ -10,6 +10,7 @@ import android.support.test.uiautomator.Until;
 import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.uiautomator.Until.hasObject;
+import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 
@@ -67,6 +68,17 @@ public class DeviceAutomator {
         assertThat(launcherPackage, notNullValue());
         mDevice.wait(hasObject(By.pkg(launcherPackage).depth(0)), timeout);
 
+        return this;
+    }
+
+    /**
+     * Asserts that the foreground app has the given package name.
+     *
+     * @param packageName package name to check against the foreground app.
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator checkForegroundAppIs(String packageName) {
+        assertTrue(mDevice.hasObject(By.pkg(packageName).depth(0)));
         return this;
     }
 
