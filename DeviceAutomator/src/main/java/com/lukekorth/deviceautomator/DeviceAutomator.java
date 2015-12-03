@@ -1,6 +1,7 @@
 package com.lukekorth.deviceautomator;
 
 import android.content.Intent;
+import android.os.RemoteException;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
@@ -66,16 +67,6 @@ public class DeviceAutomator {
         assertThat(launcherPackage, notNullValue());
         mDevice.wait(hasObject(By.pkg(launcherPackage).depth(0)), timeout);
 
-        return this;
-    }
-
-    /**
-     * Simulates a short press on the ENTER key.
-     *
-     * @return {@link DeviceAutomator} for method chaining.
-     */
-    public DeviceAutomator pressEnter() {
-        mDevice.pressEnter();
         return this;
     }
 
@@ -180,6 +171,153 @@ public class DeviceAutomator {
     public void check(AutomatorAssertion... assertions) {
         for (AutomatorAssertion assertion : assertions) {
             assertion.check(getUiObject());
+        }
+    }
+
+    /**
+     * Simulates a short press on the BACK button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressBack() {
+        mDevice.pressBack();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the MENU button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressMenu() {
+        mDevice.pressMenu();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the Recent Apps button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressRecentApps() {
+        try {
+            mDevice.pressRecentApps();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the SEARCH button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressSearch() {
+        mDevice.pressSearch();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the ENTER key.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressEnter() {
+        mDevice.pressEnter();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the DELETE key.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDelete() {
+        mDevice.pressDelete();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the DOWN button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDPadDown() {
+        mDevice.pressDPadDown();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the CENTER button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDPadCenter() {
+        mDevice.pressDPadCenter();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the LEFT button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDPadLeft() {
+        mDevice.pressDPadLeft();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the RIGHT button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDPadRight() {
+        mDevice.pressDPadRight();
+        return this;
+    }
+
+    /**
+     * Simulates a short press on the UP button.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressDPadUp() {
+        mDevice.pressDPadUp();
+        return this;
+    }
+
+    /**
+     * Opens the notification shade.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator openNotification() {
+        mDevice.openNotification();
+        return this;
+    }
+
+    /**
+     * Opens the Quick Settings shade.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator openQuickSettings() {
+        mDevice.openQuickSettings();
+        return this;
+    }
+
+    /**
+     * Checks the power manager if the screen is ON.
+     *
+     * @return {@code true} if the screen is ON else {@code false}
+     */
+    public boolean isScreenOn() {
+        try {
+            return mDevice.isScreenOn();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 
