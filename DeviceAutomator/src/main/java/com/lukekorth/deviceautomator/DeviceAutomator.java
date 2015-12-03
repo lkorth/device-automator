@@ -6,6 +6,8 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.Until;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 
 import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -184,6 +186,24 @@ public class DeviceAutomator {
         for (AutomatorAssertion assertion : assertions) {
             assertion.check(getUiObject());
         }
+    }
+
+    /**
+     * Simulates a short press of a key code for each character of the text.
+     *
+     * @param text text to type.
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator typeText(String text) {
+        KeyEvent[] events = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD)
+                .getEvents(text.toCharArray());
+        for (KeyEvent event : events) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                mDevice.pressKeyCode(event.getKeyCode());
+            }
+        }
+
+        return this;
     }
 
     /**
