@@ -177,6 +177,20 @@ public class UiObjectMatcher {
         return new UiObjectMatcher(uiSelector, bySelector);
     }
 
+    /**
+     * Find a view based on it's class.
+     *
+     * @param klass The class of the view to find.
+     * @return
+     */
+    public static UiObjectMatcher withClass(Class klass) {
+        UiSelector uiSelector = new UiSelector()
+                .className(klass);
+        BySelector bySelector = By.clazz(klass);
+
+        return new UiObjectMatcher(uiSelector, bySelector);
+    }
+
     UiObject getUiObject(UiDevice device) {
         return device.findObject(mUiSelector);
     }
