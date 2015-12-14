@@ -145,6 +145,28 @@ public class DeviceAutomator {
     }
 
     /**
+     * Waits for the ui element specified in {@link #onDevice(UiObjectMatcher)} to be visible with
+     * a timeout of 5 seconds.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator waitForExists() {
+        waitForExists(5000);
+        return this;
+    }
+
+    /**
+     * Waits for the ui element specified in {@link #onDevice(UiObjectMatcher)} to be visible with
+     * the given timeout.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator waitForExists(long timeout) {
+        getUiObject().waitForExists(timeout);
+        return this;
+    }
+
+    /**
      * Waits for the ui element specified in {@link #onDevice(UiObjectMatcher)} to be enabled with
      * a timeout of 5 seconds.
      *
