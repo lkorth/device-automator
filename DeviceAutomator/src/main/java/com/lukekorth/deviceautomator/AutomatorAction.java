@@ -53,6 +53,23 @@ public abstract class AutomatorAction {
         };
     }
 
+    /**
+     * Performs the swipe right action on the UiObject. The swipe gesture can be performed over any surface.
+     * The targeted UI element does not need to be scrollable.
+     *
+     * @param steps indicates the number of injected move steps into the system. Steps are injected about 5ms apart.
+     *              So a 100 steps may take about 1/2 second to complete.
+     * @return
+     */
+    public static AutomatorAction swipeRight(final int steps) {
+        return new AutomatorAction() {
+            @Override
+            void wrappedPerform(UiObject object) throws UiObjectNotFoundException {
+                object.swipeRight(steps);
+            }
+        };
+    }
+
     void perform(UiObject object) {
         try {
             wrappedPerform(object);
