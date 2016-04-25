@@ -136,7 +136,8 @@ public class DeviceAutomator {
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator launchApp(Intent intent, long timeout) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         getContext().startActivity(intent);
 
         mDevice.wait(hasObject(By.pkg(intent.getPackage()).depth(0)), timeout);
