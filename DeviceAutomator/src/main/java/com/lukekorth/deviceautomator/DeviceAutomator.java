@@ -115,10 +115,7 @@ public class DeviceAutomator {
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator launchApp(String packageName, long timeout) {
-        Intent intent = getContext().getPackageManager().getLaunchIntentForPackage(packageName)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        return launchApp(intent, timeout);
+        return launchApp(getContext().getPackageManager().getLaunchIntentForPackage(packageName), timeout);
     }
 
     /**
