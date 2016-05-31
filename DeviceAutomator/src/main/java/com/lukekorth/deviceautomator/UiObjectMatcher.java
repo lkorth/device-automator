@@ -191,6 +191,10 @@ public class UiObjectMatcher {
         return new UiObjectMatcher(uiSelector, bySelector);
     }
 
+    UiSelector getUiSelector() {
+        return mUiSelector;
+    }
+
     UiObject getUiObject(UiDevice device) {
         return device.findObject(mUiSelector);
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.Until;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -163,7 +162,7 @@ public class DeviceAutomator {
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator waitForExists(long timeout) {
-        getUiObject().waitForExists(timeout);
+        mMatcher.getUiObject(mDevice).waitForExists(timeout);
         return this;
     }
 
@@ -193,7 +192,7 @@ public class DeviceAutomator {
      *        {@link #onDevice(UiObjectMatcher)}.
      */
     public void perform(AutomatorAction action) {
-        action.perform(getUiObject());
+        action.perform(mMatcher.getUiSelector(), mMatcher.getUiObject(mDevice));
     }
 
     /**
@@ -202,7 +201,7 @@ public class DeviceAutomator {
      */
     public void perform(AutomatorAction... actions) {
         for (AutomatorAction action : actions) {
-            action.perform(getUiObject());
+            action.perform(mMatcher.getUiSelector(), mMatcher.getUiObject(mDevice));
         }
     }
 
@@ -211,7 +210,7 @@ public class DeviceAutomator {
      *        {@link #onDevice(UiObjectMatcher)}.
      */
     public void check(AutomatorAssertion assertion) {
-        assertion.check(getUiObject());
+        assertion.check(mMatcher.getUiObject(mDevice));
     }
 
     /**
@@ -220,7 +219,7 @@ public class DeviceAutomator {
      */
     public void check(AutomatorAssertion... assertions) {
         for (AutomatorAssertion assertion : assertions) {
-            assertion.check(getUiObject());
+            assertion.check(mMatcher.getUiObject(mDevice));
         }
     }
 
@@ -387,9 +386,5 @@ public class DeviceAutomator {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private UiObject getUiObject() {
-        return mMatcher.getUiObject(mDevice);
     }
 }

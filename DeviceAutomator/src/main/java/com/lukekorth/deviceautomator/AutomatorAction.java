@@ -1,7 +1,9 @@
 package com.lukekorth.deviceautomator;
 
 import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;import java.lang.Override;import java.lang.RuntimeException;import java.lang.String;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiScrollable;
+import android.support.test.uiautomator.UiSelector;
 
 /**
  * A collection of actions for use with {@link DeviceAutomator}.
@@ -17,7 +19,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction click() {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiObject object) throws UiObjectNotFoundException {
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.click();
             }
         };
@@ -32,7 +34,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction setText(final String text) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiObject object) throws UiObjectNotFoundException {
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.setText(text);
             }
         };
@@ -47,7 +49,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction clearTextField() {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiObject object) throws UiObjectNotFoundException {
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.clearTextField();
             }
         };
@@ -64,19 +66,34 @@ public abstract class AutomatorAction {
     public static AutomatorAction swipeRight(final int steps) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiObject object) throws UiObjectNotFoundException {
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.swipeRight(steps);
             }
         };
     }
 
-    void perform(UiObject object) {
+    /**
+     * Scrolls a {@link UiScrollable} until the given text is displayed on the screen.
+     *
+     * @param text the text to scroll to.
+     * @return
+     */
+    public static AutomatorAction scrollTextIntoView(final String text) {
+        return new AutomatorAction() {
+            @Override
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+                new UiScrollable(selector).scrollTextIntoView(text);
+            }
+        };
+    }
+
+    void perform(UiSelector selector, UiObject object) {
         try {
-            wrappedPerform(object);
+            wrappedPerform(selector, object);
         } catch (UiObjectNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    abstract void wrappedPerform(UiObject object) throws UiObjectNotFoundException;
+    abstract void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException;
 }
