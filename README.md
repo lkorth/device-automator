@@ -12,7 +12,7 @@ interacting with the application - locating UI elements and interacting with the
 
 ### Download device-automator
 
-device-automator is in an early state of development and is available via [JitPack](jitpack.io).
+device-automator is in an early state of development and is available via [JitPack](https://jitpack.io).
 
 Add the following to your repositories in your `build.gradle` file:
 
