@@ -20,9 +20,9 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the starting text in the view.
+     * Find a view based on the prefixed text in the view. The matching is case-insensitive.
      *
-     * @param text Starting text to search for.
+     * @param text Prefix to search for.
      * @return
      */
     public static UiObjectMatcher withTextStartingWith(String text) {
@@ -30,9 +30,9 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the starting text in the view.
+     * Find a view based on the prefixed text in the view. The matching is case-insensitive.
      *
-     * @param text Starting text to search for.
+     * @param text Prefix to search for.
      * @param klass Expected class of the view.
      * @return
      */
@@ -50,7 +50,7 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the text contained within the view.
+     * Find a view based on the text contained within the view. The matching is case-sensitive.
      *
      * @param text Text to search for inside a view.
      * @return
@@ -60,7 +60,7 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the text contained within the view.
+     * Find a view based on the text contained within the view. The matching is case-sensitive.
      *
      * @param text Text to search for inside a view.
      * @param klass Expected class of the view.
@@ -80,7 +80,7 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the exact text contained within the view.
+     * Find a view based on the exact text contained within the view. Matching is case-sensitive.
      *
      * @param text Exact text in the view.
      * @return
@@ -90,7 +90,7 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the exact text contained within the view.
+     * Find a view based on the exact text contained within the view. Matching is case-sensitive.
      *
      * @param text Exact text in the view.
      * @param klass Expected class of the view.
@@ -110,7 +110,10 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the content description of the view.
+     * Find a view based on the content description of the view. The content-description is typically used by the
+     * Android Accessibility framework to provide an audio prompt for the widget when the widget is selected.
+     * The content-description for the widget must match exactly with the string in your input argument.
+     * Matching is case-sensitive.
      *
      * On {@link android.os.Build.VERSION_CODES#LOLLIPOP} devices and higher than matcher can be
      * used to match views in {@link android.webkit.WebView}s and browsers.
@@ -123,7 +126,10 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the content description of the view.
+     * Find a view based on the content description of the view. The content-description is typically used by the
+     * Android Accessibility framework to provide an audio prompt for the widget when the widget is selected.
+     * The content-description for the widget must match exactly with the string in your input argument.
+     * Matching is case-sensitive.
      *
      * On {@link android.os.Build.VERSION_CODES#LOLLIPOP} devices and higher than matcher can be
      * used to match views in {@link android.webkit.WebView}s and browsers.
