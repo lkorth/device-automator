@@ -4,7 +4,9 @@ import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiSelector;import java.lang.Class;import java.lang.String;
+import android.support.test.uiautomator.UiSelector;
+
+import java.util.regex.Pattern;
 
 /**
  * A clean interface for specifying {@link UiObject}s to interact with.
@@ -80,7 +82,7 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the exact text contained within the view. Matching is case-sensitive.
+     * Find a view based on the exact text contained within the view. Matching is case-insensitive.
      *
      * @param text Exact text in the view.
      * @return
@@ -90,16 +92,18 @@ public class UiObjectMatcher {
     }
 
     /**
-     * Find a view based on the exact text contained within the view. Matching is case-sensitive.
+     * Find a view based on the exact text contained within the view. Matching is case-insensitive.
      *
      * @param text Exact text in the view.
      * @param klass Expected class of the view.
      * @return
      */
     public static UiObjectMatcher withText(String text, Class klass) {
+        Pattern pattern = Pattern.compile("(?i)" + text);
+
         UiSelector uiSelector = new UiSelector()
-                .text(text);
-        BySelector bySelector = By.text(text);
+                .textMatches(pattern.pattern());
+        BySelector bySelector = By.text(pattern);
 
         if (klass != null) {
             uiSelector.className(klass);
