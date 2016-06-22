@@ -99,7 +99,7 @@ public class UiObjectMatcher {
      * @return
      */
     public static UiObjectMatcher withText(String text, Class klass) {
-        Pattern pattern = Pattern.compile("(?i)" + text);
+        Pattern pattern = Pattern.compile("(?i)" + Pattern.quote(text));
 
         UiSelector uiSelector = new UiSelector()
                 .textMatches(pattern.pattern());
