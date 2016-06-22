@@ -306,6 +306,16 @@ public class DeviceAutomator {
     }
 
     /**
+     * Simulates a short press on the TAB key.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator pressTab() {
+        typeText("\t");
+        return this;
+    }
+
+    /**
      * Simulates a short press on the DOWN button.
      *
      * @return {@link DeviceAutomator} for method chaining.
