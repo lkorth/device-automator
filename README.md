@@ -1,5 +1,7 @@
 # device-automator
 
+ [![Build Status](https://travis-ci.org/lkorth/device-automator.svg?branch=master)](https://travis-ci.org/lkorth/device-automator)
+
 Device Automator is an Android library built on top of the [UI Automator testing
 framework](http://developer.android.com/training/testing/ui-testing/uiautomator-testing.html).
 Device Automator provides an easy to use syntax for writing UI Automator tests that interact across
