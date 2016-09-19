@@ -74,7 +74,7 @@ public class UiObjectMatcher {
         BySelector bySelector = By.textContains(text);
 
         if (klass != null) {
-            uiSelector.className(klass);
+            uiSelector = uiSelector.className(klass);
             bySelector.clazz(klass);
         }
 
