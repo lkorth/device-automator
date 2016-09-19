@@ -44,7 +44,7 @@ public class UiObjectMatcher {
         BySelector bySelector = By.textStartsWith(text);
 
         if (klass != null) {
-            uiSelector.className(klass);
+            uiSelector = uiSelector.className(klass);
             bySelector.clazz(klass);
         }
 
@@ -106,7 +106,7 @@ public class UiObjectMatcher {
         BySelector bySelector = By.text(pattern);
 
         if (klass != null) {
-            uiSelector.className(klass);
+            uiSelector = uiSelector.className(klass);
             bySelector.clazz(klass);
         }
 
@@ -148,7 +148,7 @@ public class UiObjectMatcher {
         BySelector bySelector = By.desc(text);
 
         if (klass != null) {
-            uiSelector.className(klass);
+            uiSelector = uiSelector.className(klass);
             bySelector.clazz(klass);
         }
 
@@ -180,7 +180,7 @@ public class UiObjectMatcher {
         BySelector bySelector = By.res(id);
 
         if (klass != null) {
-            uiSelector.className(klass);
+            uiSelector = uiSelector.className(klass);
             bySelector.clazz(klass);
         }
 
