@@ -1,15 +1,22 @@
 package com.lukekorth.deviceautomator;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.RemoteException;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
 import static android.support.test.InstrumentationRegistry.getContext;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.uiautomator.Until.hasObject;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -220,6 +227,46 @@ public class DeviceAutomator {
     public void check(AutomatorAssertion... assertions) {
         for (AutomatorAssertion assertion : assertions) {
             assertion.check(mMatcher.getUiObject(mDevice));
+        }
+    }
+
+    /**
+     * Clicks the accept button on runtime permission prompts on Marshmallow and above if the prompt
+     * is displayed.
+     *
+     * @param permission the permission to accept. Should be one of {@link android.Manifest.permission}
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator acceptRuntimePermission(String permission) {
+        clickPermissionDialogButton(permission, 1);
+        return this;
+    }
+
+    /**
+     * Clicks the deny button on runtime permission prompts on Marshmallow and above if the prompt
+     * is displayed.
+     *
+     * @param permission the permission to deny. Should be one of {@link android.Manifest.permission}
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator denyRuntimePermission(String permission) {
+        clickPermissionDialogButton(permission, 0);
+        return this;
+    }
+
+    private void clickPermissionDialogButton(String permission, int buttonIndex) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                ContextCompat.checkSelfPermission(getTargetContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+            try {
+                UiObject allowPermissions = mDevice.findObject(new UiSelector()
+                        .clickable(true)
+                        .checkable(false)
+                        .index(buttonIndex));
+
+                if (allowPermissions.exists()) {
+                    allowPermissions.click();
+                }
+            } catch (UiObjectNotFoundException ignored) {}
         }
     }
 
