@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 25
@@ -26,4 +28,76 @@ dependencies {
 
     testCompile 'org.robolectric:robolectric:3.1.2'
     testCompile 'org.mockito:mockito-core:1.10.19'
+}
+
+/* maven deploy + signing */
+task javadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocsJar(type: Jar, dependsOn: javadocs) {
+    classifier = 'javadoc'
+    from javadocs.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives javadocsJar
+    archives sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+def sonatypeUsername = System.properties.containsKey('sonatypeUsername') ? System.properties['sonatypeUsername'] : ''
+def sonatypePassword = System.properties.containsKey('sonatypePassword') ? System.properties['sonatypePassword'] : ''
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.setArtifactId 'device-automator'
+
+            pom.project {
+                name 'device-automator'
+                groupId 'com.lukekorth'
+                version android.defaultConfig.versionName
+                packaging 'jar'
+                description 'An easy to use, Espresso like, syntax on top of the Android UI Automator testing framework'
+                url 'https://github.com/lkorth/device-automator'
+
+                scm {
+                    url 'scm:git@github.com:lkorth/device-automator.git'
+                    connection 'scm:git@github.com:lkorth/device-automator.git'
+                    developerConnection 'scm:git@github.com:lkorth/device-automator.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'http://opensource.org/licenses/MIT'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'lkorth'
+                        name 'Luke Korth'
+                    }
+                }
+            }
+        }
+    }
 }
