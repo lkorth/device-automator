@@ -1,16 +1,21 @@
+sudo: true
 language: android
 jdk: oraclejdk8
-sudo: false
-env:
-  global:
-    - TERM=dumb
 android:
   components:
+    - tools
+    - tools
     - platform-tools
-    - tools
-    - tools
     - build-tools-25.0.2
     - android-25
+    - android-22
+    - sys-img-armeabi-v7a-android-22
     - extra-android-support
     - extra-android-m2repository
-script: ./gradlew --info clean test
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -skin WXGA720 -no-audio -no-window &
+  - android-wait-for-emulator
+  - sleep 60
+  - adb shell input keyevent 82
+script: ./gradlew --info clean lint test connectedAndroidTest

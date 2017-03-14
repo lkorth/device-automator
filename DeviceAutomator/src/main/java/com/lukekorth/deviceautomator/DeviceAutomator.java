@@ -281,7 +281,7 @@ public class DeviceAutomator {
                 .getEvents(text.toCharArray());
         for (KeyEvent event : events) {
             if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                mDevice.pressKeyCode(event.getKeyCode());
+                mDevice.pressKeyCode(event.getKeyCode(), event.getMetaState());
             }
         }
 
