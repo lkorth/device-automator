@@ -20,12 +20,35 @@ import static org.mockito.Mockito.when;
 public class DeviceAutomatorTest {
 
     private UiDevice mUiDevice;
-    private DeviceAutomator mDeviceAutomator;
 
     @Before
     public void setup() {
         mUiDevice = mock(UiDevice.class);
-        mDeviceAutomator = new DeviceAutomator(mUiDevice, null);
+    }
+
+    @Test
+    public void exists_returnsTrueIfObjectExists() {
+        UiObject object = mock(UiObject.class);
+        when(object.exists()).thenReturn(true);
+        UiObjectMatcher matcher = mock(UiObjectMatcher.class);
+        when(matcher.getUiObject(mUiDevice)).thenReturn(object);
+
+        assertTrue(getDeviceAutomator(matcher).exists());
+    }
+
+    @Test
+    public void exists_returnsFalseIfObjectDoesNotExist() {
+        UiObject object = mock(UiObject.class);
+        when(object.exists()).thenReturn(false);
+        UiObjectMatcher matcher = mock(UiObjectMatcher.class);
+        when(matcher.getUiObject(mUiDevice)).thenReturn(object);
+
+        assertFalse(getDeviceAutomator(matcher).exists());
+    }
+
+    @Test
+    public void exists_doesNotThrowIfObjectIsNull() {
+        assertFalse(getDeviceAutomator(null).exists());
     }
 
     @Test
@@ -34,9 +57,9 @@ public class DeviceAutomatorTest {
         when(object.isChecked()).thenReturn(true);
         UiObjectMatcher matcher = mock(UiObjectMatcher.class);
         when(matcher.getUiObject(mUiDevice)).thenReturn(object);
-        mDeviceAutomator = new DeviceAutomator(mUiDevice, matcher);
+        DeviceAutomator deviceAutomator = getDeviceAutomator(matcher);
 
-        assertTrue(mDeviceAutomator.isChecked());
+        assertTrue(deviceAutomator.isChecked());
     }
 
     @Test
@@ -45,14 +68,14 @@ public class DeviceAutomatorTest {
         when(object.isChecked()).thenReturn(false);
         UiObjectMatcher matcher = mock(UiObjectMatcher.class);
         when(matcher.getUiObject(mUiDevice)).thenReturn(object);
-        mDeviceAutomator = new DeviceAutomator(mUiDevice, matcher);
+        DeviceAutomator deviceAutomator = getDeviceAutomator(matcher);
 
-        assertFalse(mDeviceAutomator.isChecked());
+        assertFalse(deviceAutomator.isChecked());
     }
 
     @Test
     public void typeText_supportsSymbols() {
-        mDeviceAutomator.typeText("`~!@#$%^&*()-_=+[]\\|;:'\",<.>/?");
+        getDeviceAutomator(null).typeText("`~!@#$%^&*()-_=+[]\\|;:'\",<.>/?");
 
         verify(mUiDevice).pressKeyCode(KeyEvent.KEYCODE_GRAVE, 0);
         verify(mUiDevice).pressKeyCode(KeyEvent.KEYCODE_GRAVE, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON);
@@ -84,5 +107,9 @@ public class DeviceAutomatorTest {
         verify(mUiDevice).pressKeyCode(KeyEvent.KEYCODE_PERIOD, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON);
         verify(mUiDevice).pressKeyCode(KeyEvent.KEYCODE_SLASH, 0);
         verify(mUiDevice).pressKeyCode(KeyEvent.KEYCODE_SLASH, KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_ON);
+    }
+
+    private DeviceAutomator getDeviceAutomator(UiObjectMatcher matcher) {
+        return new DeviceAutomator(mUiDevice, matcher);
     }
 }

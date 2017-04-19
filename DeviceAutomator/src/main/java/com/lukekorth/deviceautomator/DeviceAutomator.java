@@ -195,6 +195,18 @@ public class DeviceAutomator {
     }
 
     /**
+     * @return {@code true} if the ui element specified in {@link #onDevice()} exists,
+     * {@code false} otherwise.
+     */
+    public boolean exists() {
+        if (mMatcher == null || mMatcher.getUiObject(mDevice) == null) {
+            return false;
+        }
+
+        return mMatcher.getUiObject(mDevice).exists();
+    }
+
+    /**
      * @return {@code true} if the ui element specified in {@link #onDevice()} is checked,
      * {@code false} otherwise.
      */
