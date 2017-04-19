@@ -2,14 +2,19 @@ package com.lukekorth.deviceautomator;
 
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.view.KeyEvent;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public class DeviceAutomatorTest {
@@ -21,6 +26,28 @@ public class DeviceAutomatorTest {
     public void setup() {
         mUiDevice = mock(UiDevice.class);
         mDeviceAutomator = new DeviceAutomator(mUiDevice, null);
+    }
+
+    @Test
+    public void isChecked_returnsTrueIfObjectIsChecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isChecked()).thenReturn(true);
+        UiObjectMatcher matcher = mock(UiObjectMatcher.class);
+        when(matcher.getUiObject(mUiDevice)).thenReturn(object);
+        mDeviceAutomator = new DeviceAutomator(mUiDevice, matcher);
+
+        assertTrue(mDeviceAutomator.isChecked());
+    }
+
+    @Test
+    public void isChecked_returnsFalseIfObjectIsNotChecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isChecked()).thenReturn(false);
+        UiObjectMatcher matcher = mock(UiObjectMatcher.class);
+        when(matcher.getUiObject(mUiDevice)).thenReturn(object);
+        mDeviceAutomator = new DeviceAutomator(mUiDevice, matcher);
+
+        assertFalse(mDeviceAutomator.isChecked());
     }
 
     @Test

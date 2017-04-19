@@ -195,6 +195,18 @@ public class DeviceAutomator {
     }
 
     /**
+     * @return {@code true} if the ui element specified in {@link #onDevice()} is checked,
+     * {@code false} otherwise.
+     */
+    public boolean isChecked() {
+        try {
+            return mMatcher.getUiObject(mDevice).isChecked();
+        } catch (UiObjectNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * @param action the {@link AutomatorAction} to perform on the ui element specified in
      *        {@link #onDevice(UiObjectMatcher)}.
      */

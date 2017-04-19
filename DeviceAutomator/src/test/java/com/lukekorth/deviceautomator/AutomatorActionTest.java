@@ -12,7 +12,9 @@ import java.util.concurrent.CountDownLatch;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 public class AutomatorActionTest {
@@ -24,6 +26,69 @@ public class AutomatorActionTest {
         AutomatorAction.click().perform(null, object);
 
         verify(object).click();
+    }
+
+    @Test
+    public void check_doesNotClickObjectIfObjectNotCheckable() throws UiObjectNotFoundException {
+        UiObject uncheckedObject = mock(UiObject.class);
+        when(uncheckedObject.isCheckable()).thenReturn(false);
+        when(uncheckedObject.isChecked()).thenReturn(false);
+
+        AutomatorAction.check(true).perform(null, uncheckedObject);
+
+        verify(uncheckedObject, times(0)).click();
+
+        UiObject checkedObject = mock(UiObject.class);
+        when(checkedObject.isCheckable()).thenReturn(false);
+        when(checkedObject.isChecked()).thenReturn(true);
+
+        AutomatorAction.check(false).perform(null, checkedObject);
+
+        verify(checkedObject, times(0)).click();
+    }
+
+    @Test
+    public void check_clicksObjectIfRequestingCheckAndObjectNotChecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isCheckable()).thenReturn(true);
+        when(object.isChecked()).thenReturn(false);
+
+        AutomatorAction.check(true).perform(null, object);
+
+        verify(object).click();
+    }
+
+    @Test
+    public void check_doesNotClickObjectIfRequestingCheckAndObjectIsChecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isCheckable()).thenReturn(true);
+        when(object.isChecked()).thenReturn(true);
+
+        AutomatorAction.check(true).perform(null, object);
+
+        verify(object, times(0)).click();
+    }
+
+    @Test
+    public void check_clicksObjectIfRequestingUncheckAndObjectChecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isCheckable()).thenReturn(true);
+        when(object.isChecked()).thenReturn(true);
+
+        AutomatorAction.check(false).perform(null, object);
+
+        verify(object).click();
+    }
+
+    @Test
+    public void check_doesNotClickObjectIfRequestingUncheckAndObjectIsUnchecked() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        when(object.isCheckable()).thenReturn(true);
+        when(object.isChecked()).thenReturn(false);
+
+        AutomatorAction.check(false).perform(null, object);
+
+        verify(object, times(0)).click();
     }
 
     @Test

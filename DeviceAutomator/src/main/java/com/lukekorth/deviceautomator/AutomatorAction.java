@@ -26,6 +26,24 @@ public abstract class AutomatorAction {
     }
 
     /**
+     * Checks or unchecks the ui element based on the check param if the element is checkable.
+     *
+     * @param check {@code true} to check the element, {@code false} to uncheck the element.
+     * @return
+     */
+    public static AutomatorAction check(final boolean check) {
+        return new AutomatorAction() {
+            @Override
+            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+                if (object.isCheckable() &&
+                        ((check && !object.isChecked()) || (!check && object.isChecked()))) {
+                    object.click();
+                }
+            }
+        };
+    }
+
+    /**
      * Sets the text on the ui element specified in
      * {@link DeviceAutomator#onDevice(UiObjectMatcher)}.
      *
