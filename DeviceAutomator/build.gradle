@@ -63,8 +63,8 @@ signing {
     sign configurations.archives
 }
 
-def sonatypeUsername = System.env.containsKey('SONATYPE_USERNAME')
-def sonatypePassword = System.env.containsKey('SONATYPE_PASSWORD')
+def sonatypeUsername = System.env['SONATYPE_USERNAME']
+def sonatypePassword = System.env['SONATYPE_PASSWORD']
 
 uploadArchives {
     repositories {
