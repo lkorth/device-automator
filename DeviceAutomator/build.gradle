@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+version = '0.2.0-SNAPSHOT'
+
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
@@ -10,7 +12,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 25
         versionCode 3
-        versionName '0.2.0'
+        versionName version
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
@@ -57,11 +59,12 @@ artifacts {
 }
 
 signing {
+    required { !version.endsWith("SNAPSHOT") }
     sign configurations.archives
 }
 
-def sonatypeUsername = System.properties.containsKey('sonatypeUsername') ? System.properties['sonatypeUsername'] : ''
-def sonatypePassword = System.properties.containsKey('sonatypePassword') ? System.properties['sonatypePassword'] : ''
+def sonatypeUsername = System.env.containsKey('SONATYPE_USERNAME')
+def sonatypePassword = System.env.containsKey('SONATYPE_PASSWORD')
 
 uploadArchives {
     repositories {
