@@ -15,6 +15,7 @@ public class UiObjectMatcher {
 
     private UiSelector mUiSelector;
     private BySelector mBySelector;
+    private UiObjectMatcher mChildMatcher;
 
     private UiObjectMatcher(UiSelector uiSelector, BySelector bySelector) {
         mUiSelector = uiSelector;
@@ -201,12 +202,29 @@ public class UiObjectMatcher {
         return new UiObjectMatcher(uiSelector, bySelector);
     }
 
+    /**
+     * Specify the child matcher for use with {@link UiSelector#childSelector(UiSelector)}.
+     *
+     * Use this selector to narrow the search scope to child widgets under a specific parent widget.
+     *
+     * @param childMatcher The {@link UiObjectMatcher} to use as the child matcher.
+     * @return
+     */
+    public UiObjectMatcher childMatcher(UiObjectMatcher childMatcher) {
+        mChildMatcher = childMatcher;
+        return this;
+    }
+
     UiSelector getUiSelector() {
+        if (mChildMatcher != null) {
+            return mUiSelector.childSelector(mChildMatcher.getUiSelector());
+        }
+
         return mUiSelector;
     }
 
     UiObject getUiObject(UiDevice device) {
-        return device.findObject(mUiSelector);
+        return device.findObject(getUiSelector());
     }
 
     BySelector getBySelector() {

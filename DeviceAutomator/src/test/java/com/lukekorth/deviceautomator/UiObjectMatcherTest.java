@@ -3,6 +3,8 @@ package com.lukekorth.deviceautomator;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiSelector;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.junit.Test;
@@ -116,6 +118,32 @@ public class UiObjectMatcherTest {
                 matcher.getUiSelector().toString());
         assertEquals("BySelector [CLASS='\\Qandroid.widget.TextView\\E']",
                 matcher.getBySelector().toString());
+    }
+
+    @Test
+    public void childMatcher_setsChildSelector() {
+        UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class)
+                .childMatcher(UiObjectMatcher.withClass(ImageView.class));
+
+        assertEquals("UiSelector[CLASS=android.widget.LinearLayout, CHILD=UiSelector[CLASS=android.widget.ImageView]]",
+                matcher.getUiSelector().toString());
+    }
+
+    @Test
+    public void getUiSelector_containsChildSelectorIfChildMatcherIsNotNull() {
+        UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class)
+                .childMatcher(UiObjectMatcher.withClass(ImageView.class));
+
+        assertEquals("UiSelector[CLASS=android.widget.LinearLayout, CHILD=UiSelector[CLASS=android.widget.ImageView]]",
+                matcher.getUiSelector().toString());
+    }
+
+    @Test
+    public void getUiSelector_doesNotContainChildSelectorIfChildMatcherIsNull() {
+        UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class);
+
+        assertEquals("UiSelector[CLASS=android.widget.LinearLayout]",
+                matcher.getUiSelector().toString());
     }
 
     @Test
