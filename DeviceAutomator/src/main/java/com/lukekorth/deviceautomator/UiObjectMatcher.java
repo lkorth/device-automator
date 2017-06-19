@@ -15,7 +15,6 @@ public class UiObjectMatcher {
 
     private UiSelector mUiSelector;
     private BySelector mBySelector;
-    private UiObjectMatcher mChildMatcher;
 
     private UiObjectMatcher(UiSelector uiSelector, BySelector bySelector) {
         mUiSelector = uiSelector;
@@ -211,15 +210,11 @@ public class UiObjectMatcher {
      * @return
      */
     public UiObjectMatcher childMatcher(UiObjectMatcher childMatcher) {
-        mChildMatcher = childMatcher;
+        mUiSelector = mUiSelector.childSelector(childMatcher.getUiSelector());
         return this;
     }
 
     UiSelector getUiSelector() {
-        if (mChildMatcher != null) {
-            return mUiSelector.childSelector(mChildMatcher.getUiSelector());
-        }
-
         return mUiSelector;
     }
 

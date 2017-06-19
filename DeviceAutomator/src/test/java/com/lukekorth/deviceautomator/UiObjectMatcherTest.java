@@ -130,16 +130,7 @@ public class UiObjectMatcherTest {
     }
 
     @Test
-    public void getUiSelector_containsChildSelectorIfChildMatcherIsNotNull() {
-        UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class)
-                .childMatcher(UiObjectMatcher.withClass(ImageView.class));
-
-        assertEquals("UiSelector[CLASS=android.widget.LinearLayout, CHILD=UiSelector[CLASS=android.widget.ImageView]]",
-                matcher.getUiSelector().toString());
-    }
-
-    @Test
-    public void getUiSelector_doesNotContainChildSelectorIfChildMatcherIsNull() {
+    public void getUiSelector() {
         UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class);
 
         assertEquals("UiSelector[CLASS=android.widget.LinearLayout]",
