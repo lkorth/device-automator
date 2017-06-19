@@ -14,13 +14,19 @@ interacting with the application - locating UI elements and interacting with the
 
 ### Download device-automator
 
-device-automator is in an early state of development, but is available on Maven.
-
 Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
   androidTestCompile 'com.lukekorth:device-automator:0.2.0'
+}
+```
+
+To use the latest build from the `master` branch use:
+
+```groovy
+dependencies {
+  androidTestCompile 'com.lukekorth:device-automator:0.2.1-SNAPSHOT'
 }
 ```
 
