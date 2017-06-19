@@ -130,6 +130,15 @@ public class UiObjectMatcherTest {
     }
 
     @Test
+    public void instance_setsInstance() {
+        UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class)
+                .instance(2);
+
+        assertEquals("UiSelector[CLASS=android.widget.LinearLayout, INSTANCE=2]",
+                matcher.getUiSelector().toString());
+    }
+
+    @Test
     public void getUiSelector() {
         UiObjectMatcher matcher = UiObjectMatcher.withClass(LinearLayout.class);
 

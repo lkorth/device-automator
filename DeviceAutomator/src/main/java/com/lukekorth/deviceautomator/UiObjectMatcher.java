@@ -214,6 +214,20 @@ public class UiObjectMatcher {
         return this;
     }
 
+    /**
+     * Set the search criteria to match the widget by its instance number. The instance value must
+     * be 0 or greater, where the first instance is 0. For example, to simulate a user click on the
+     * third image that is enabled in a UI screen, you could specify a a search criteria where the
+     * instance is 2.
+     *
+     * @param instance The instance to find.
+     * @return
+     */
+    public UiObjectMatcher instance(int instance) {
+        mUiSelector = mUiSelector.instance(instance);
+        return this;
+    }
+
     UiSelector getUiSelector() {
         return mUiSelector;
     }
