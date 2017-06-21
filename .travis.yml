@@ -10,8 +10,6 @@ android:
     - android-26
     - android-22
     - sys-img-armeabi-v7a-android-22
-    - extra-android-support
-    - extra-android-m2repository
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -skin WXGA720 -no-audio -no-window &
