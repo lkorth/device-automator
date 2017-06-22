@@ -27,6 +27,10 @@ import static org.hamcrest.core.IsNull.notNullValue;
  */
 public class DeviceAutomator {
 
+    private static final String TEXT_DENY_UPPER = "DENY";
+    private static final String TEXT_DENY_REGULAR = "Deny";
+    private static final String TEXT_ALLOW_UPPER = "ALLOW";
+    private static final String TEXT_ALLOW_REGULAR = "Allow";
     private UiDevice mDevice;
     private UiObjectMatcher mMatcher;
 
@@ -267,6 +271,18 @@ public class DeviceAutomator {
     }
 
     /**
+     * Clicks the accept button on runtime permission prompts on Marshmallow and above if the prompt
+     * is displayed. Will click all permission dialogs if there are multiple permission requested
+     * together.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator acceptAllRuntimePermissions() {
+        clickAndAllowAllPermissionDialogButtons();
+        return this;
+    }
+
+    /**
      * Clicks the deny button on runtime permission prompts on Marshmallow and above if the prompt
      * is displayed.
      *
@@ -275,6 +291,18 @@ public class DeviceAutomator {
      */
     public DeviceAutomator denyRuntimePermission(String permission) {
         clickPermissionDialogButton(permission, 0);
+        return this;
+    }
+
+    /**
+     * Clicks the deny button on runtime permission prompts on Marshmallow and above if the prompt
+     * is displayed. Will click all permission dialogs if there are multiple permission requested
+     * together.
+     *
+     * @return {@link DeviceAutomator} for method chaining.
+     */
+    public DeviceAutomator denyAllRuntimePermissions() {
+        clickAndDenyAllPermissionDialogButtons();
         return this;
     }
 
@@ -294,6 +322,37 @@ public class DeviceAutomator {
         }
     }
 
+    private void clickAndAllowAllPermissionDialogButtons() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                UiObject allowPermissionsUsingText = mDevice.findObject(new UiSelector().text(TEXT_ALLOW_UPPER));
+                while (allowPermissionsUsingText.exists()) {
+                    allowPermissionsUsingText.click();
+                }
+                allowPermissionsUsingText = mDevice.findObject(new UiSelector().text(TEXT_ALLOW_REGULAR));
+                while (allowPermissionsUsingText.exists()) {
+                    allowPermissionsUsingText.click();
+                }
+            } catch (UiObjectNotFoundException ignored) {
+            }
+        }
+    }
+
+    private void clickAndDenyAllPermissionDialogButtons() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                UiObject denyPermissionsUsingText = mDevice.findObject(new UiSelector().text(TEXT_DENY_UPPER));
+                while (denyPermissionsUsingText.exists()) {
+                    denyPermissionsUsingText.click();
+                }
+                denyPermissionsUsingText = mDevice.findObject(new UiSelector().text(TEXT_DENY_REGULAR));
+                while (denyPermissionsUsingText.exists()) {
+                    denyPermissionsUsingText.click();
+                }
+            } catch (UiObjectNotFoundException ignored) {
+            }
+        }
+    }
     /**
      * Simulates a short press of a key code for each character of the text.
      *
