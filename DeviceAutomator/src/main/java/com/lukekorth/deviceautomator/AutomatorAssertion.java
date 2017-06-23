@@ -11,11 +11,39 @@ import org.hamcrest.StringDescription;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 /**
  * A collection of assertions for use with {@link DeviceAutomator}.
  */
 public abstract class AutomatorAssertion {
+
+    /**
+     * Asserts that the ui element specified in {@link DeviceAutomator#onDevice(UiObjectMatcher)}
+     * is visible.
+     *
+     * @return
+     */
+    public static AutomatorAssertion visible(final boolean visible) {
+        return new AutomatorAssertion() {
+            @Override
+            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+                Rect bounds = object.getVisibleBounds();
+
+                if (bounds == null) {
+                    fail("Matched view did not have any visible bounds");
+                }
+
+                if (visible) {
+                    assertTrue("Matched view was not visible", bounds.width() > 0);
+                    assertTrue("Matched view was not visible", bounds.height() > 0);
+                } else {
+                    assertTrue("Matched view was visible", bounds.width() == 0);
+                    assertTrue("Matched view was visible", bounds.height() == 0);
+                }
+            }
+        };
+    }
 
     /**
      * Asserts that the ui element specified in {@link DeviceAutomator#onDevice(UiObjectMatcher)}
@@ -28,7 +56,7 @@ public abstract class AutomatorAssertion {
         return new AutomatorAssertion() {
             @Override
             void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
-                assertObjectVisible(object);
+                visible(true).check(object);
                 if (!matcher.matches(object.getText())) {
                     StringDescription description = new StringDescription();
                     description.appendText("Expected ");
@@ -52,7 +80,7 @@ public abstract class AutomatorAssertion {
         return new AutomatorAssertion() {
             @Override
             void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
-                assertObjectVisible(object);
+                visible(true).check(object);
                 if (!matcher.matches(object.getContentDescription())) {
                     StringDescription description = new StringDescription();
                     description.appendText("Expected ");
@@ -89,10 +117,4 @@ public abstract class AutomatorAssertion {
     }
 
     abstract void wrappedCheck(UiObject object) throws UiObjectNotFoundException;
-
-    private static void assertObjectVisible(UiObject object) throws UiObjectNotFoundException {
-        Rect bounds = object.getVisibleBounds();
-        assertTrue("Matched view was not visible", bounds.width() > 0);
-        assertTrue("Matched view was not visible", bounds.height() > 0);
-    }
 }
