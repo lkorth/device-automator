@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,6 +24,18 @@ public class AutomatorAssertionTest {
             AutomatorAssertion.visible(true).check(mock(UiObject.class));
         } catch (AssertionFailedError e) {
             assertEquals("Matched view did not have any visible bounds", e.getMessage());
+        }
+    }
+
+    @Test
+    public void visible_true_assertionFailsWhenObjectIsNotFound() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        doThrow(new UiObjectNotFoundException("Not Found!")).when(object).getVisibleBounds();
+
+        try {
+            AutomatorAssertion.visible(true).check(object);
+        } catch (AssertionFailedError e) {
+            assertEquals("Not Found!", e.getMessage());
         }
     }
 
@@ -74,6 +87,14 @@ public class AutomatorAssertionTest {
         } catch (AssertionFailedError e) {
             assertEquals("Matched view did not have any visible bounds", e.getMessage());
         }
+    }
+
+    @Test
+    public void visible_false_isSuccessfulWhenObjectIsNotFound() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+        doThrow(new UiObjectNotFoundException("Not Found!")).when(object).getVisibleBounds();
+
+        AutomatorAssertion.visible(false).check(object);
     }
 
     @Test

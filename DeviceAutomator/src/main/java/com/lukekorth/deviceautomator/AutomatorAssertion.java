@@ -28,18 +28,24 @@ public abstract class AutomatorAssertion {
         return new AutomatorAssertion() {
             @Override
             void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
-                Rect bounds = object.getVisibleBounds();
+                try {
+                    Rect bounds = object.getVisibleBounds();
 
-                if (bounds == null) {
-                    fail("Matched view did not have any visible bounds");
-                }
+                    if (bounds == null) {
+                        fail("Matched view did not have any visible bounds");
+                    }
 
-                if (visible) {
-                    assertTrue("Matched view was not visible", bounds.width() > 0);
-                    assertTrue("Matched view was not visible", bounds.height() > 0);
-                } else {
-                    assertTrue("Matched view was visible", bounds.width() == 0);
-                    assertTrue("Matched view was visible", bounds.height() == 0);
+                    if (visible) {
+                        assertTrue("Matched view was not visible", bounds.width() > 0);
+                        assertTrue("Matched view was not visible", bounds.height() > 0);
+                    } else {
+                        assertTrue("Matched view was visible", bounds.width() == 0);
+                        assertTrue("Matched view was visible", bounds.height() == 0);
+                    }
+                } catch (UiObjectNotFoundException e) {
+                    if (visible) {
+                        fail(e.getMessage());
+                    }
                 }
             }
         };
