@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-version = '0.3.0'
+version = '0.3.1-SNAPSHOT'
 
 android {
     compileSdkVersion 26
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 4
+        versionCode 5
         versionName version
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
