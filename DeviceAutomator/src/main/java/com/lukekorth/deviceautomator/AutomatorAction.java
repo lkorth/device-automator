@@ -19,7 +19,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction click() {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.click();
             }
         };
@@ -34,7 +34,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction check(final boolean check) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 if (object.isCheckable() &&
                         ((check && !object.isChecked()) || (!check && object.isChecked()))) {
                     object.click();
@@ -52,7 +52,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction setText(final String text) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.setText(text);
             }
         };
@@ -67,7 +67,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction clearTextField() {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.clearTextField();
             }
         };
@@ -84,7 +84,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction swipeRight(final int steps) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 object.swipeRight(steps);
             }
         };
@@ -99,7 +99,7 @@ public abstract class AutomatorAction {
     public static AutomatorAction scrollTextIntoView(final String text) {
         return new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 new UiScrollable(selector).scrollTextIntoView(text);
             }
         };
@@ -113,5 +113,5 @@ public abstract class AutomatorAction {
         }
     }
 
-    abstract void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException;
+    public abstract void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException;
 }
