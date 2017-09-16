@@ -27,7 +27,7 @@ public abstract class AutomatorAssertion {
     public static AutomatorAssertion visible(final boolean visible) {
         return new AutomatorAssertion() {
             @Override
-            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+            public void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
                 try {
                     Rect bounds = object.getVisibleBounds();
 
@@ -61,7 +61,7 @@ public abstract class AutomatorAssertion {
     public static AutomatorAssertion text(final Matcher matcher) {
         return new AutomatorAssertion() {
             @Override
-            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+            public void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
                 visible(true).check(object);
                 if (!matcher.matches(object.getText())) {
                     StringDescription description = new StringDescription();
@@ -85,7 +85,7 @@ public abstract class AutomatorAssertion {
     public static AutomatorAssertion contentDescription(final Matcher matcher) {
         return new AutomatorAssertion() {
             @Override
-            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+            public void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
                 visible(true).check(object);
                 if (!matcher.matches(object.getContentDescription())) {
                     StringDescription description = new StringDescription();
@@ -108,7 +108,7 @@ public abstract class AutomatorAssertion {
     public static AutomatorAssertion foregroundAppIs(final String packageName) {
         return new AutomatorAssertion() {
             @Override
-            void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
+            public void wrappedCheck(UiObject object) throws UiObjectNotFoundException {
                 assertTrue(UiDevice.getInstance(getInstrumentation()).hasObject(By.pkg(packageName)));
             }
         };
@@ -122,5 +122,5 @@ public abstract class AutomatorAssertion {
         }
     }
 
-    abstract void wrappedCheck(UiObject object) throws UiObjectNotFoundException;
+    public abstract void wrappedCheck(UiObject object) throws UiObjectNotFoundException;
 }
