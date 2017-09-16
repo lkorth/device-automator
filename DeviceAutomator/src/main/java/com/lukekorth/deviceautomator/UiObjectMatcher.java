@@ -16,7 +16,7 @@ public class UiObjectMatcher {
     private UiSelector mUiSelector;
     private BySelector mBySelector;
 
-    private UiObjectMatcher(UiSelector uiSelector, BySelector bySelector) {
+    public UiObjectMatcher(UiSelector uiSelector, BySelector bySelector) {
         mUiSelector = uiSelector;
         mBySelector = bySelector;
     }
@@ -228,15 +228,15 @@ public class UiObjectMatcher {
         return this;
     }
 
-    UiSelector getUiSelector() {
+    public UiSelector getUiSelector() {
         return mUiSelector;
     }
 
-    UiObject getUiObject(UiDevice device) {
+    public UiObject getUiObject(UiDevice device) {
         return device.findObject(getUiSelector());
     }
 
-    BySelector getBySelector() {
+    public BySelector getBySelector() {
         return mBySelector;
     }
 }
