@@ -125,7 +125,7 @@ public class AutomatorActionTest {
         final CountDownLatch latch = new CountDownLatch(1);
         AutomatorAction action = new AutomatorAction() {
             @Override
-            void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
+            public void wrappedPerform(UiSelector selector, UiObject object) throws UiObjectNotFoundException {
                 assertEquals(expectedSelector, selector);
                 assertEquals(expectedObject, object);
                 latch.countDown();
