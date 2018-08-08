@@ -118,6 +118,15 @@ public class AutomatorActionTest {
         verify(object).swipeRight(5);
     }
 
+    @Test
+    public void swipeLeft() throws UiObjectNotFoundException {
+        UiObject object = mock(UiObject.class);
+
+        AutomatorAction.swipeLeft(5).perform(null, object);
+
+        verify(object).swipeLeft(5);
+    }
+
     @Test(timeout = 1000)
     public void perform() throws InterruptedException {
         final UiSelector expectedSelector = mock(UiSelector.class);
