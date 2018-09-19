@@ -1,8 +1,8 @@
 package com.lukekorth.deviceautomator;
 
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiSelector;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
