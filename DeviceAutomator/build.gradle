@@ -25,10 +25,10 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.test.uiautomator:uiautomator:2.2.0-alpha4'
-    implementation 'androidx.test:runner:1.1.0-alpha4'
-    implementation 'androidx.test:rules:1.1.0-alpha4'
-    implementation 'androidx.core:core:1.0.0-rc02'
+    api 'androidx.test.uiautomator:uiautomator:2.2.0-alpha4'
+    api 'androidx.test:runner:1.1.0-alpha4'
+    api 'androidx.test:rules:1.1.0-alpha4'
+    api 'androidx.core:core:1.0.0-rc02'
 
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
 
