@@ -1,8 +1,8 @@
 package com.lukekorth.deviceautomator;
 
 import android.graphics.Rect;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import junit.framework.AssertionFailedError;
 

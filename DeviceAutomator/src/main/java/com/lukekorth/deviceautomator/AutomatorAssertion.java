@@ -1,15 +1,15 @@
 package com.lukekorth.deviceautomator;
 
 import android.graphics.Rect;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.StringDescription;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
