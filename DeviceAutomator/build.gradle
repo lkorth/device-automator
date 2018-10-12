@@ -33,7 +33,7 @@ dependencies {
     androidTestImplementation 'com.google.dexmaker:dexmaker-mockito:1.2'
 
     testImplementation 'org.robolectric:robolectric:3.3.2'
-    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.mockito:mockito-core:2.8.47'
 }
 
 /* maven deploy + signing */
