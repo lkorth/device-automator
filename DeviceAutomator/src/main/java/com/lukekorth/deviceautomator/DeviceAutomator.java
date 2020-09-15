@@ -1,9 +1,12 @@
 package com.lukekorth.deviceautomator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.RemoteException;
+
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -14,9 +17,7 @@ import androidx.core.content.ContextCompat;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
-import static androidx.test.InstrumentationRegistry.getContext;
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static androidx.test.InstrumentationRegistry.getTargetContext;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.uiautomator.Until.hasObject;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -121,7 +122,7 @@ public class DeviceAutomator {
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator launchApp(String packageName, long timeout) {
-        return launchApp(getContext().getPackageManager().getLaunchIntentForPackage(packageName), timeout);
+        return launchApp(getInstrumentation().getContext().getPackageManager().getLaunchIntentForPackage(packageName), timeout);
     }
 
     /**
@@ -144,7 +145,7 @@ public class DeviceAutomator {
     public DeviceAutomator launchApp(Intent intent, long timeout) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getContext().startActivity(intent);
+        getInstrumentation().getContext().startActivity(intent);
 
         mDevice.wait(hasObject(By.pkg(intent.getPackage()).depth(0)), timeout);
 
@@ -279,8 +280,9 @@ public class DeviceAutomator {
     }
 
     private void clickPermissionDialogButton(String permission, int buttonIndex) {
+        Context targetContext = ApplicationProvider.getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ContextCompat.checkSelfPermission(getTargetContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(targetContext, permission) != PackageManager.PERMISSION_GRANTED) {
             try {
                 UiObject allowPermissions = mDevice.findObject(new UiSelector()
                         .clickable(true)
