@@ -6,10 +6,12 @@ android:
     - tools
     - tools
     - platform-tools
-    - build-tools-29.0.2
-    - android-29
+    - build-tools-30.0.2
+    - android-30
     - android-22
     - sys-img-armeabi-v7a-android-22
+before_install:
+  - yes | sdkmanager "platforms;android-30"
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -skin WXGA720 -no-audio -no-window &
