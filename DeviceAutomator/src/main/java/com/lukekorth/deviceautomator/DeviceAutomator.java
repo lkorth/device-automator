@@ -122,7 +122,8 @@ public class DeviceAutomator {
      * @return {@link DeviceAutomator} for method chaining.
      */
     public DeviceAutomator launchApp(String packageName, long timeout) {
-        return launchApp(getInstrumentation().getContext().getPackageManager().getLaunchIntentForPackage(packageName), timeout);
+        Context targetContext = ApplicationProvider.getApplicationContext();
+        return launchApp(targetContext.getPackageManager().getLaunchIntentForPackage(packageName), timeout);
     }
 
     /**
@@ -145,7 +146,8 @@ public class DeviceAutomator {
     public DeviceAutomator launchApp(Intent intent, long timeout) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        getInstrumentation().getContext().startActivity(intent);
+        Context targetContext = ApplicationProvider.getApplicationContext();
+        targetContext.startActivity(intent);
 
         mDevice.wait(hasObject(By.pkg(intent.getPackage()).depth(0)), timeout);
 
