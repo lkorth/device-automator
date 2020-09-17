@@ -282,7 +282,7 @@ public class DeviceAutomator {
 
     private void clickPermissionDialogButton(String permission, int buttonIndex) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ContextCompat.checkSelfPermission(targetContext, permission) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(ApplicationProvider.getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
             try {
                 UiObject allowPermissions = mDevice.findObject(new UiSelector()
                         .clickable(true)
