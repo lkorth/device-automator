@@ -281,7 +281,6 @@ public class DeviceAutomator {
     }
 
     private void clickPermissionDialogButton(String permission, int buttonIndex) {
-        Context targetContext = ApplicationProvider.getApplicationContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 ContextCompat.checkSelfPermission(targetContext, permission) != PackageManager.PERMISSION_GRANTED) {
             try {
