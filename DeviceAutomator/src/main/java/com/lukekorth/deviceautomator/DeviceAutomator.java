@@ -146,8 +146,7 @@ public class DeviceAutomator {
     public DeviceAutomator launchApp(Intent intent, long timeout) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        Context targetContext = ApplicationProvider.getApplicationContext();
-        targetContext.startActivity(intent);
+        ApplicationProvider.getApplicationContext().startActivity(intent);
 
         mDevice.wait(hasObject(By.pkg(intent.getPackage()).depth(0)), timeout);
 
