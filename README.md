@@ -18,7 +18,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  androidTestCompile 'com.lukekorth:device-automator:1.0.0'
+  androidTestCompile 'com.lukekorth:device-automator:1.1.0'
 }
 ```
 
