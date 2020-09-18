@@ -26,7 +26,7 @@ To use the latest build from the `master` branch use:
 
 ```groovy
 dependencies {
-  androidTestCompile 'com.lukekorth:device-automator:1.0.0-SNAPSHOT'
+  androidTestCompile 'com.lukekorth:device-automator:1.1.0-SNAPSHOT'
 }
 ```
 
